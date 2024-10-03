@@ -52,6 +52,24 @@ void mix_Array(int arr[], int size)
     }
 }
 
+float get_Average(int array[], int size){
+    long times_array[50];
+    for(int i=0; i < 50; i++){
+        mix_Array(array, size);
+        auto start = high_resolution_clock::now();
+        quicksort(array, 0, size-1);
+        auto stop = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stop - start);
+        times_array[i] = duration.count();
+    }
+    long sum = 0;
+    for(int i=0; i < 50; i++){
+        sum += times_array[i];
+    }
+    float average = sum/50;
+    return average;
+}
+
 int main()
 {
     int arr_1[100];
@@ -64,54 +82,46 @@ int main()
     int arr_17[1750];
     int arr_2[2000];
 
+    int arr_sizes[9] = {100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000};
+    int arr_average[9];
+    int aux = 0;
+
     int n = sizeof(arr_1) / sizeof(arr_1[0]);
     fill_array(arr_1, n);
+    arr_average[aux] = get_Average(arr_1, n);
+    aux++;
 
-    long times_array[50];
-    for(int i=0; i < 50; i++){
-        mix_Array(arr_1, n);
-        auto start = high_resolution_clock::now();
-        quicksort(arr_1, 0, n-1);
-        auto stop = high_resolution_clock::now();
-        auto duration = duration_cast<microseconds>(stop - start);
-        times_array[i] = duration.count();
-    }
-    long sum = 0;
-    for(int i=0; i < 50; i++){
-        sum += times_array[i];
-    }
-    float average = sum/50;
-    cout << average << "\n";
-
-    /*int n = sizeof(arr_25) / sizeof(arr_25[0]);
+    n = sizeof(arr_25) / sizeof(arr_25[0]);
     fill_array(arr_25, n);
+    cout << get_Average(arr_25, n) << "\n";
 
-    int n = sizeof(arr_5) / sizeof(arr_5[0]);
+    n = sizeof(arr_5) / sizeof(arr_5[0]);
     fill_array(arr_5, n);
+    cout << get_Average(arr_5, n) << "\n";
 
-    int n = sizeof(arr_75) / sizeof(arr_75[0]);
+    n = sizeof(arr_75) / sizeof(arr_75[0]);
     fill_array(arr_75, n);
+    cout << get_Average(arr_75, n) << "\n";
 
-    int n = sizeof(arr_10) / sizeof(arr_10[0]);
+    n = sizeof(arr_10) / sizeof(arr_10[0]);
     fill_array(arr_10, n);
-    
-    int n = sizeof(arr_12) / sizeof(arr_12[0]);
+    cout << get_Average(arr_10, n) << "\n";    
+
+    n = sizeof(arr_12) / sizeof(arr_12[0]);
     fill_array(arr_12, n);
+    cout << get_Average(arr_12, n) << "\n";
 
-    int n = sizeof(arr_15) / sizeof(arr_15[0]);
+    n = sizeof(arr_15) / sizeof(arr_15[0]);
     fill_array(arr_15, n);
+    cout << get_Average(arr_15, n) << "\n";
 
-    int n = sizeof(arr_17) / sizeof(arr_17[0]);
+    n = sizeof(arr_17) / sizeof(arr_17[0]);
     fill_array(arr_17, n);
+    cout << get_Average(arr_17, n) << "\n";
 
-    int n = sizeof(arr_2) / sizeof(arr_2[0]);
+    n = sizeof(arr_2) / sizeof(arr_2[0]);
     fill_array(arr_2, n);
+    cout << get_Average(arr_2, n) << "\n";
 
-    int arr[] = {9, 4, 6. 7};
-    int n = sizeof(arr) / sizeof(arr[0]);
-    quicksort(arr, 0, n-1);
-    for(int i=0; i < n; i++){
-        cout << arr[i] << ",";
-    }*/
     return 0;
 }
